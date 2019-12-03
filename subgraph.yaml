@@ -1,0 +1,45 @@
+specVersion: 0.0.2
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: MemberRolesContract
+    network: mainnet
+    source:
+      address: "0x548bf2610c1F15Ec6bB78914aA7F90c59a82F492"
+      abi: Contract
+      startBlock: 7815837
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - MemberRole
+      abis:
+        - name: Contract
+          file: ./abis/MemberRolesContract.json
+      callHandlers:
+        - function: payJoiningFee(address)
+          handler: handlePayJoiningFee
+      file: ./src/mappingMemberRole.ts
+  - kind: ethereum/contract
+    name: PoolContract
+    network: mainnet
+    source:
+      address: "0xfD61352232157815cF7B71045557192Bf0CE1884"
+      abi: Contract
+      startBlock: 7815747
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - Apiresult
+        - Payout
+      abis:
+        - name: Contract
+          file: ./abis/PoolContract.json
+      callHandlers:
+        - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32)
+          handler: handlePayJoiningFee
+      file: ./src/mappingPool.ts

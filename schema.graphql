@@ -1,0 +1,12 @@
+type Member @entity {
+  id: ID! # address
+  covers: [Cover!] @derivedFrom(field: "member")
+}
+
+type Cover @entity {
+  id: ID!
+  member: Member!
+  contract: Bytes! # address
+  coverPeriod: Int!
+  createdOn: BigInt!
+}
