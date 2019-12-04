@@ -10,3 +10,7 @@ type Cover @entity {
   coverPeriod: Int!
   createdOn: BigInt!
 }
+
+type Stake @entity {
+  id: ID!
+}
