@@ -1,7 +1,7 @@
-import { MakeCoverBeginCall } from "../generated/PoolContract/Contract"
+import { MakeCoverBeginCall } from "../generated/templates/Pool1/Pool1"
 import { Cover } from "../generated/schema"
 
-export function handlePayJoiningFee(call: MakeCoverBeginCall): void {
+export function handleNewCover(call: MakeCoverBeginCall): void {
   const id = call.transaction.hash.toHex();
   let entity = Cover.load(id)
   if (entity == null) {

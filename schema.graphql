@@ -14,3 +14,9 @@ type Cover @entity {
 type Stake @entity {
   id: ID!
 }
+
+type MasterContract @entity {
+  id: ID!
+  pool1: Bytes! # address
+  memberRoles: Bytes! # address
+}

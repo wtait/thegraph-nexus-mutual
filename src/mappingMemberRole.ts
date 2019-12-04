@@ -1,4 +1,4 @@
-import { PayJoiningFeeCall } from "../generated/MemberRolesContract/Contract"
+import { PayJoiningFeeCall } from "../generated/templates/MemberRoles/MemberRoles"
 import { Member } from "../generated/schema"
 
 export function handlePayJoiningFee(call: PayJoiningFeeCall): void {
