@@ -76,6 +76,6 @@ templates:
         - name: Pool1
           file: ./abis/Pool1.json
       callHandlers:
-        - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32
+        - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32)
           handler: handleNewCover
       file: ./src/mappingPool1.ts
