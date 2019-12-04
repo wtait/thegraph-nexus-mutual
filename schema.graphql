@@ -10,3 +10,9 @@ type Cover @entity {
   coverPeriod: Int!
   createdOn: BigInt!
 }
+
+type MasterContract @entity {
+  id: ID!
+  pool1: Bytes! # address
+  memberRoles: Bytes! # address
+}
