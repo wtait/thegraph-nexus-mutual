@@ -43,3 +43,23 @@ dataSources:
         - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32)
           handler: handlePayJoiningFee
       file: ./src/mappingPool.ts
+  - kind: ethereum/contract
+    name: TokenFunctionsContract
+    network: mainnet
+    source:
+      address: "0xDF50A17bF58dea5039B73683a51c4026F3c7224E"
+      abi: Contract
+      startBlock: 7815786
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - Stake
+      abis:
+        - name: Contract
+          file: ./abis/TokenFunctionsContract.json
+      callHandlers:
+        - function: addStake(address,uint256)
+          handler: handleAddStake
+      file: ./src/mappingTokenFunctions.ts
