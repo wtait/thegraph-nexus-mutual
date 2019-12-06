@@ -13,7 +13,7 @@ type Cover @entity {
 
 type Stake @entity {
   id: ID!
-  contract: Bytes #address
+  contract: Bytes! #address
   amount: BigInt!
 }
 
