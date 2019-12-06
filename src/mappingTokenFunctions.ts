@@ -5,6 +5,7 @@ export function handleAddStake(call: AddStakeCall): void {
     const id = call.transaction.hash.toHex();
     let entity = Stake.load(id)
     if (entity == null) {
+        entity = new Stake(id)
         entity.save();
     }
 }
