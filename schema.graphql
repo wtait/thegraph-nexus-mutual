@@ -17,8 +17,9 @@ type Stake @entity {
   amount: BigInt!
 }
 
-type MasterContract @entity {
+type LatestContracts @entity {
   id: ID!
   pool1: Bytes! # address
   memberRoles: Bytes! # address
+  tokenFunctions: Bytes! # address
 }

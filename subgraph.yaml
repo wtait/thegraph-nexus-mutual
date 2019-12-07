@@ -2,46 +2,26 @@ specVersion: 0.0.2
 schema:
   file: ./schema.graphql
 dataSources:
-  - name: MasterContract
+  - name: ContractRegister
     kind: ethereum/contract
     network: mainnet
     source:
       address: "0x08C3A887865684f30351A0Ba6d683Aa9b539829a"
-      abi: MasterContract
+      abi: ContractRegister
       startBlock: 7815848
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
       language: wasm/assemblyscript
       entities:
-        - MasterContract
+        - LatestContracts
       abis:
-        - name: MasterContract
-          file: ./abis/MasterContract.json
+        - name: ContractRegister
+          file: ./abis/ContractRegister.json
       callHandlers:
         - function: addNewVersion(address[])
           handler: updateContracts
-      file: ./src/mappingMasterContract.ts
-  - kind: ethereum/contract
-    name: TokenFunctionsContract
-    network: mainnet
-    source:
-      address: "0xDF50A17bF58dea5039B73683a51c4026F3c7224E"
-      abi: Contract
-      startBlock: 7815786
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      entities:
-        - Stake
-      abis:
-        - name: Contract
-          file: ./abis/TokenFunctionsContract.json
-      callHandlers:
-        - function: addStake(address,uint256)
-          handler: handleAddStake
-      file: ./src/mappingTokenFunctions.ts
+      file: ./src/mappingContractRegister.ts
 templates:
   - name: MemberRoles
     kind: ethereum/contract
@@ -79,3 +59,21 @@ templates:
         - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32)
           handler: handleNewCover
       file: ./src/mappingPool1.ts
+  - name: TokenFunctions
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: TokenFunctions
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - Stake
+      abis:
+        - name: TokenFunctions
+          file: ./abis/TokenFunctions.json
+      callHandlers:
+        - function: addStake(address,uint256)
+          handler: handleAddStake
+      file: ./src/mappingTokenFunctions.ts

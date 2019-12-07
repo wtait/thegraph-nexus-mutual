@@ -1,14 +1,13 @@
 import { MakeCoverBeginCall } from "../generated/templates/Pool1/Pool1"
-import { Cover, MasterContract } from "../generated/schema"
+import { Cover, LatestContracts } from "../generated/schema"
 import { log } from "@graphprotocol/graph-ts";
 
 export function handleNewCover(call: MakeCoverBeginCall): void {
-  let mc = MasterContract.load("1");
-  if (mc.pool1 != call.to) {
+  if (LatestContracts.load("1").pool1 != call.to) {
     log.info("Ignoring outdated pool1 contract: {}", [call.to.toHexString()]);
     return;
   }
-  const id = call.transaction.hash.toHex();
+  let id = call.transaction.hash.toHex();
   let entity = Cover.load(id)
   if (entity == null) {
     entity = new Cover(id);
