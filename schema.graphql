@@ -11,6 +11,12 @@ type Cover @entity {
   createdOn: BigInt!
 }
 
+type Stake @entity {
+  id: ID!
+  contract: Bytes! #address
+  amount: BigInt!
+}
+
 type MasterContract @entity {
   id: ID!
   pool1: Bytes! # address

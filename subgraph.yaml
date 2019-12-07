@@ -22,6 +22,26 @@ dataSources:
         - function: addNewVersion(address[])
           handler: updateContracts
       file: ./src/mappingMasterContract.ts
+  - kind: ethereum/contract
+    name: TokenFunctionsContract
+    network: mainnet
+    source:
+      address: "0xDF50A17bF58dea5039B73683a51c4026F3c7224E"
+      abi: Contract
+      startBlock: 7815786
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - Stake
+      abis:
+        - name: Contract
+          file: ./abis/TokenFunctionsContract.json
+      callHandlers:
+        - function: addStake(address,uint256)
+          handler: handleAddStake
+      file: ./src/mappingTokenFunctions.ts
 templates:
   - name: MemberRoles
     kind: ethereum/contract
