@@ -1,14 +1,11 @@
 import { PayJoiningFeeCall } from "../generated/templates/MemberRoles/MemberRoles"
-import { Member } from "../generated/schema"
-import { isLatestNexusContract } from "./helpers";
+import { User } from "../generated/schema"
+import { isLatestNexusContract, getUser } from "./helpers";
 
 export function handlePayJoiningFee(call: PayJoiningFeeCall): void {
   if (isLatestNexusContract("memberRoles", call.to)) {
-    let id = call.inputs._userAddress.toHex();
-    let entity = Member.load(id)
-    if (entity == null) {
-      entity = new Member(id);
-      entity.save();
-    }
+    let entity = getUser(call.inputs._userAddress);
+    entity.isMember = true;
+    entity.save();
   }
 }

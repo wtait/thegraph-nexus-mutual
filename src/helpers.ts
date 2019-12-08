@@ -1,4 +1,4 @@
-import { NexusContracts, InsuredContract } from "../generated/schema";
+import { NexusContracts, InsuredContract, User } from "../generated/schema";
 import { log, Address } from "@graphprotocol/graph-ts";
 
 export function isLatestNexusContract(contractName: string, address: Address): boolean {
@@ -17,4 +17,17 @@ export function getInsuredContract(address: Address): InsuredContract {
     entity.save();
   }
   return entity as InsuredContract;
+}
+
+export function getUser(address: Address): User {
+  let id = address.toHexString();
+  let entity = User.load(id)
+  if (entity == null) {
+    entity = new User(id);
+    entity.isMember = false;
+    entity.coverCount = 0;
+    entity.stakeCount = 0;
+    entity.save();
+  }
+  return entity as User;
 }

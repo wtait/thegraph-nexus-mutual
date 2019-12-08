@@ -1,6 +1,10 @@
-type Member @entity {
+type User @entity {
   id: ID! # address
-  covers: [Cover!]! @derivedFrom(field: "member")
+  isMember: Boolean!
+  coverCount: Int!
+  stakeCount: Int!
+  covers: [Cover!]! @derivedFrom(field: "user")
+  stakes: [Stake!]! @derivedFrom(field: "user")
 }
 
 type InsuredContract @entity {
@@ -12,7 +16,7 @@ type InsuredContract @entity {
 
 type Cover @entity {
   id: ID!
-  member: Member!
+  user: User!
   contract: InsuredContract!
   amount: BigInt!
   daysToCover: Int!
@@ -22,8 +26,11 @@ type Cover @entity {
 
 type Stake @entity {
   id: ID!
+  user: User!
   contract: InsuredContract!
   amount: BigInt!
+  unlockedAmount: BigInt!
+  burntAmount: BigInt!
   daysToStake: Int!
   created: BigInt!
   expires: BigInt!
@@ -33,5 +40,5 @@ type NexusContracts @entity {
   id: ID!
   pool1: Bytes! # address
   memberRoles: Bytes! # address
-  tokenFunctions: Bytes! # address
+  tokenData: Bytes! # address
 }

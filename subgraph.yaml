@@ -59,11 +59,11 @@ templates:
         - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32)
           handler: handleNewCover
       file: ./src/mappingPool1.ts
-  - name: TokenFunctions
+  - name: TokenData
     kind: ethereum/contract
     network: mainnet
     source:
-      abi: TokenFunctions
+      abi: TokenData
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -71,9 +71,13 @@ templates:
       entities:
         - Stake
       abis:
-        - name: TokenFunctions
-          file: ./abis/TokenFunctions.json
+        - name: TokenData
+          file: ./abis/TokenData.json
       callHandlers:
-        - function: addStake(address,uint256)
+        - function: addStake(address,address,uint256)
           handler: handleAddStake
-      file: ./src/mappingTokenFunctions.ts
+        - function: pushUnlockedStakedTokens(address,uint256,uint256)
+          handler: handleRemoveStake
+        - function: pushBurnedTokens(address,uint256,uint256)
+          handler: handleBurnStake
+      file: ./src/mappingTokenData.ts
