@@ -1,23 +1,35 @@
 type Member @entity {
   id: ID! # address
-  covers: [Cover!] @derivedFrom(field: "member")
+  covers: [Cover!]! @derivedFrom(field: "member")
+}
+
+type InsuredContract @entity {
+  id: ID!
+  ens: String
+  covers: [Cover!]! @derivedFrom(field: "contract")
+  stakes: [Stake!]! @derivedFrom(field: "contract")
 }
 
 type Cover @entity {
   id: ID!
   member: Member!
-  contract: Bytes! # address
-  coverPeriod: Int!
-  createdOn: BigInt!
+  contract: InsuredContract!
+  amount: BigInt!
+  daysToCover: Int!
+  created: BigInt!
+  expires: BigInt!
 }
 
 type Stake @entity {
   id: ID!
-  contract: Bytes! #address
+  contract: InsuredContract!
   amount: BigInt!
+  daysToStake: Int!
+  created: BigInt!
+  expires: BigInt!
 }
 
-type LatestContracts @entity {
+type NexusContracts @entity {
   id: ID!
   pool1: Bytes! # address
   memberRoles: Bytes! # address

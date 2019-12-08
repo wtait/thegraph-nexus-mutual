@@ -1,18 +1,20 @@
 import { AddStakeCall } from "../generated/templates/TokenFunctions/TokenFunctions"
-import { Stake, LatestContracts } from "../generated/schema"
-import { log } from '@graphprotocol/graph-ts'
+import { Stake } from "../generated/schema"
+import { isLatestNexusContract, getInsuredContract } from "./helpers";
+import { BigInt } from "@graphprotocol/graph-ts";
 
 export function handleAddStake(call: AddStakeCall): void {
-  if (LatestContracts.load("1").tokenFunctions != call.to) {
-    log.info("Ignoring outdated tokenFunctions contract: {}", [call.to.toHexString()]);
-    return;
-  }
-  let id = call.transaction.hash.toHex();
-  let entity = Stake.load(id)
-  if (entity == null) {
-    entity = new Stake(id)
-    entity.contract = call.inputs._scAddress
-    entity.amount = call.inputs._amount
-    entity.save();
+  if (isLatestNexusContract("tokenFunctions", call.to)) {
+    let id = call.transaction.hash.toHex();
+    let entity = Stake.load(id);
+    if (entity == null) {
+      entity = new Stake(id);
+      entity.contract = getInsuredContract(call.inputs._scAddress).id;
+      entity.amount = call.inputs._amount;
+      entity.daysToStake = 250;
+      entity.created =  call.block.timestamp;
+      entity.expires = call.block.timestamp.plus(BigInt.fromI32(entity.daysToStake * 24 * 60 * 60));
+      entity.save();
+    }
   }
 }

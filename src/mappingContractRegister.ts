@@ -1,7 +1,7 @@
 import { Bytes, log, Address, Value } from "@graphprotocol/graph-ts"
 import { ContractRegister, AddNewVersionCall } from "../generated/ContractRegister/ContractRegister";
 import { MemberRoles, Pool1, TokenFunctions } from "../generated/templates";
-import { LatestContracts } from  "../generated/schema";
+import { NexusContracts } from  "../generated/schema";
 
 function getLatestAddress(register: ContractRegister, hexString: string): Address {
   return register.getLatestAddress(Bytes.fromHexString(hexString) as Bytes);
@@ -16,9 +16,9 @@ export function updateContracts(call: AddNewVersionCall): void {
   let memberRoles =  getLatestAddress(register, "4d52"); // MR
   let tokenFunctions =  getLatestAddress(register, "5446"); // TF
   
-  let entity = LatestContracts.load("1");
+  let entity = NexusContracts.load("1");
   if (entity == null) {
-    entity = new LatestContracts("1");
+    entity = new NexusContracts("1");
     entity.pool1 = new Bytes(0);
     entity.memberRoles = new Bytes(0);
     entity.tokenFunctions = new Bytes(0);
