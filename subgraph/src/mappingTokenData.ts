@@ -1,5 +1,5 @@
-import { AddStakeCall, PushUnlockedStakedTokensCall, TokenData, PushBurnedTokensCall } from "../generated/templates/TokenData/TokenData"
-import { Stake } from "../generated/schema"
+import { AddStakeCall, PushUnlockedStakedTokensCall, TokenData, PushBurnedTokensCall } from "../../generated/templates/TokenData/TokenData"
+import { Stake } from "../../generated/schema"
 import { isLatestNexusContract, getInsuredContract, getUser } from "./helpers";
 import { BigInt, BigDecimal, log } from "@graphprotocol/graph-ts";
 
