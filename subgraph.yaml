@@ -96,5 +96,6 @@ templates:
         - name: ClaimsData
           file: ./abis/ClaimsData.json
       callHandlers:
-
+        - function: addClaim(uint256, uint256, address, uint256)
+          handler: handleAddClaim
       file: ./src/mappingClaimsData.ts
