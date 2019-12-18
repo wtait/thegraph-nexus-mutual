@@ -1,0 +1,53 @@
+type User @entity {
+  id: ID! # address
+  isMember: Boolean!
+  coverCount: Int!
+  stakeCount: Int!
+  covers: [Cover!]! @derivedFrom(field: "user")
+  stakes: [Stake!]! @derivedFrom(field: "user")
+}
+
+type InsuredContract @entity {
+  id: ID!
+  ens: String
+  covers: [Cover!]! @derivedFrom(field: "contract")
+  stakes: [Stake!]! @derivedFrom(field: "contract")
+}
+
+type Cover @entity {
+  id: ID!
+  user: User!
+  contract: InsuredContract!
+  amount: BigInt!
+  daysToCover: Int!
+  created: BigInt!
+  expires: BigInt!
+}
+
+type Stake @entity {
+  id: ID!
+  user: User!
+  contract: InsuredContract!
+  amount: BigInt!
+  unlockedAmount: BigInt!
+  burntAmount: BigInt!
+  daysToStake: Int!
+  created: BigInt!
+  expires: BigInt!
+}
+
+type NexusContracts @entity {
+  id: ID!
+  pool1: Bytes! # address
+  memberRoles: Bytes! # address
+  tokenData: Bytes! # address
+  claimsData: Bytes! # address
+}
+
+type Claim @entity {
+  id: ID!
+}
+
+type NXM Token @entity {
+  id: ID!
+}
