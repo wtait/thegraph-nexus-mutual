@@ -23,7 +23,7 @@ export function updateContracts(call: AddNewVersionCall): void {
     entity.pool1 = new Bytes(0);
     entity.memberRoles = new Bytes(0);
     entity.tokenData = new Bytes(0);
-    entity.claimsData = Bytes(0);
+    entity.claimsData = new Bytes(0);
   }
   if (entity.pool1 != pool1) {
     log.info("Found new pool1 contract: {}", [pool1.toHexString()]);

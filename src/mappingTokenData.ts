@@ -13,8 +13,8 @@ export function handleAddStake(call: AddStakeCall): void {
       entity = new Stake(id);
       entity.user = user.id;
       entity.contract = getInsuredContract(call.inputs._stakedContractAddress).id;
-      let decimalMultiplier = BigInt.fromI32(10).pw(18).toBigDecimal();
-      entity.amount = call.inputs._amount;
+      let decimalMultiplier = BigInt.fromI32(10).pow(18).toBigDecimal();
+      entity.amount = call.inputs._amount.toBigDecimal();
       entity.unlockedAmount = BigInt.fromI32(0);
       entity.burntAmount = BigInt.fromI32(0);
       entity.daysToStake = 250;
