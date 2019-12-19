@@ -21,7 +21,7 @@ export function getInsuredContract(address: Address): InsuredContract {
 
 export function getUser(address: Address): User {
   let id = address.toHexString();
-  let entity = User.load(id)
+  let entity = User.load(id);
   if (entity == null) {
     entity = new User(id);
     entity.isMember = false;

@@ -1,7 +1,7 @@
 import { AddStakeCall, PushUnlockedStakedTokensCall, TokenData, PushBurnedTokensCall } from "../generated/templates/TokenData/TokenData"
 import { Stake } from "../generated/schema"
 import { isLatestNexusContract, getInsuredContract, getUser } from "./helpers";
-import { BigInt, Address, log } from "@graphprotocol/graph-ts";
+import { BigInt, BigDecimal, log } from "@graphprotocol/graph-ts";
 
 export function handleAddStake(call: AddStakeCall): void {
   if (isLatestNexusContract("tokenData", call.to)) {
@@ -13,6 +13,7 @@ export function handleAddStake(call: AddStakeCall): void {
       entity = new Stake(id);
       entity.user = user.id;
       entity.contract = getInsuredContract(call.inputs._stakedContractAddress).id;
+      let decimalMultiplier = BigInt.fromI32(10).pw(18).toBigDecimal();
       entity.amount = call.inputs._amount;
       entity.unlockedAmount = BigInt.fromI32(0);
       entity.burntAmount = BigInt.fromI32(0);

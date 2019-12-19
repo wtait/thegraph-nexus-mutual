@@ -28,7 +28,7 @@ type Stake @entity {
   id: ID!
   user: User!
   contract: InsuredContract!
-  amount: BigInt!
+  amount: BigDecimal!
   unlockedAmount: BigInt!
   burntAmount: BigInt!
   daysToStake: Int!
