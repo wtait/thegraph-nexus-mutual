@@ -42,7 +42,3 @@ type NexusContracts @entity {
   memberRoles: Bytes! # address
   tokenData: Bytes! # address
 }
-
-type Claim @entity {
-  id: ID!
-}
