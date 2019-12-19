@@ -41,6 +41,7 @@ type NexusContracts @entity {
   pool1: Bytes! # address
   memberRoles: Bytes! # address
   tokenData: Bytes! # address
+<<<<<<< HEAD
   claimsData: Bytes! # address
 }
 
@@ -50,4 +51,6 @@ type Claim @entity {
 
 type NXM Token @entity {
   id: ID!
+=======
+>>>>>>> parent of 90a3871... schema has Claim entity
 }
