@@ -47,3 +47,7 @@ type NexusContracts @entity {
 type Claim @entity {
   id: ID!
 }
+
+type NXM Token @entity {
+  id: ID!
+}
