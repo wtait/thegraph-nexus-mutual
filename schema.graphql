@@ -50,4 +50,8 @@ type Claim @entity {
 
 type NXM Token @entity {
   id: ID!
+  totalSupply: BigInt!
+  price: BigInt!
+  marketCap: BigInt!
+  users: [User]
 }
