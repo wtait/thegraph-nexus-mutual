@@ -14,7 +14,7 @@ export function handleAddStake(call: AddStakeCall): void {
       entity.user = user.id;
       entity.contract = getInsuredContract(call.inputs._stakedContractAddress).id;
       let decimalMultiplier = BigInt.fromI32(10).pow(18).toBigDecimal();
-      entity.amount = call.inputs._amount.toBigDecimal();
+      entity.amount = call.inputs._amount.divDecimal(decimalMultiplier);
       entity.unlockedAmount = BigInt.fromI32(0);
       entity.burntAmount = BigInt.fromI32(0);
       entity.daysToStake = 250;
@@ -34,7 +34,7 @@ export function handleRemoveStake(call: PushUnlockedStakedTokensCall): void {
     let entity = Stake.load(id);
     log.debug("Unlocking stake for {}", [id]);
     entity.unlockedAmount = entity.unlockedAmount.plus(call.inputs._amount);
-    entity.save();
+    entity.save(); 
   }
 }
 
