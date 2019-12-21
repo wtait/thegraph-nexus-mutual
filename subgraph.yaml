@@ -99,3 +99,21 @@ templates:
         - function: addClaim(uint256, uint256, address, uint256)
           handler: handleAddClaim
       file: ./src/mappingClaimsData.ts
+  - name: NXMToken
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: NXMToken
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - NXMToken
+      abis:
+        - name: NXMToken
+          file: ./abis/NXMToken.json
+      callHandlers:
+        - function: Transfer(indexed address, indexed address, uint256)
+          handler: handleTransfer
+      file: ./src/mappingNXMToken.json

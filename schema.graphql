@@ -48,7 +48,7 @@ type Claim @entity {
   id: ID!
 }
 
-type NXM Token @entity {
+type NXMToken @entity {
   id: ID!
   totalSupply: BigInt!
   price: BigInt!
