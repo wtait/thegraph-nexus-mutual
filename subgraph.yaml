@@ -41,7 +41,67 @@ templates:
         - function: payJoiningFee(address)
           handler: handlePayJoiningFee
       file: ./src/mappingMemberRole.ts
- - name: Pool1
+  - name: TokenData
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: TokenData
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - Stake
+      abis:
+        - name: TokenData
+          file: ./abis/TokenData.json
+      callHandlers:
+        - function: addStake(address,address,uint256)
+          handler: handleAddStake
+        - function: pushUnlockedStakedTokens(address,uint256,uint256)
+          handler: handleRemoveStake
+        - function: pushBurnedTokens(address,uint256,uint256)
+          handler: handleBurnStake
+      file: ./src/mappingTokenData.ts
+  - name: QuotationData
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: QuotationData
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - QuotationData
+      eventHandlers:
+        - event: CoverDetailsEvent(indexed uint256,address,uint256,uint256,uint256,uint256,bytes4)
+          handler: handleCoverDetailsEvent
+      abis:
+        - name: QuotationData
+          file: ./abis/QuotationData.json
+      file: ./src/mappingQuotationData.ts
+  - name: ClaimsData
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: ClaimsData
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - ClaimsData
+      eventHandlers:
+        - event: VoteCast(indexed address,indexed uint256,indexed bytes4,uint256,uint256,int8)
+          handler: handleVoteCast
+        - event: ClaimRaise(indexed uint256,indexed address,uint256,uint256)
+          handler: handleClaimRaise
+      abis:
+        - name: ClaimsData
+          file: ./abis/ClaimsData.json
+      file: ./src/mappingClaimsData.ts
+  - name: Pool1
     kind: ethereum/contract
     network: mainnet
     source:
