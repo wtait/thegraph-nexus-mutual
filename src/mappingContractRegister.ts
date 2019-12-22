@@ -1,7 +1,7 @@
 import { Bytes, log } from "@graphprotocol/graph-ts"
 import { ContractRegister, AddNewVersionCall } from "../generated/ContractRegister/ContractRegister";
 import { MemberRoles, TokenData, ClaimsData, QuotationData, TokenController, NXMToken } from "../generated/templates";
-import { NexusContracts } from  "../generated/schema";
+import { NexusContractList } from  "../generated/schema";
 import { getLatestAddress } from "./helpers";
 
 export function updateContracts(call: AddNewVersionCall): void {
@@ -20,9 +20,9 @@ export function updateContracts(call: AddNewVersionCall): void {
   // Payout
   // Commission
 
-  let entity = NexusContracts.load("1");
+  let entity = NexusContractList.load("1");
   if (entity == null) {
-    entity = new NexusContracts("1");
+    entity = new NexusContractList("1");
     entity.contractRegister = register._address;
     entity.memberRoles = new Bytes(0);
     entity.tokenData = new Bytes(0);

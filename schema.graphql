@@ -42,7 +42,7 @@ type Stake @entity {
   expires: BigInt!
 }
 
-type NexusContracts @entity {
+type NexusContractList @entity {
   id: ID!
   contractRegister: Bytes! # address
   memberRoles: Bytes! # address
@@ -71,7 +71,9 @@ type Vote @entity {
 
 type NXMToken @entity {
   id: ID!
-  # totalSupply: BigInt!
+  address: Bytes!
+  initialSupply: BigDecimal!
+  totalSupply: BigInt!
   # price: BigInt!   
   # marketCap: BigInt!
   # users: [User!]

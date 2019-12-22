@@ -14,7 +14,7 @@ dataSources:
       apiVersion: 0.0.3
       language: wasm/assemblyscript
       entities:
-        - NexusContracts
+        - NexusContractList
       abis:
         - name: ContractRegister
           file: ./abis/ContractRegister.json

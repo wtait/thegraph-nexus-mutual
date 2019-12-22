@@ -1,9 +1,9 @@
-import { NexusContracts, InsuredContract, User } from "../generated/schema";
+import { NexusContractList, InsuredContract, User } from "../generated/schema";
 import { log, Address, Bytes, BigInt, BigDecimal } from "@graphprotocol/graph-ts";
 import { ContractRegister } from "../generated/ContractRegister/ContractRegister";
 
 export function isLatestNexusContract(contractName: string, address: Address): boolean {
-  if (NexusContracts.load("1").get(contractName).toBytes() != address) {
+  if (NexusContractList.load("1").get(contractName).toBytes() != address) {
     log.info("Ignoring outdated {} contract: {}", [contractName, address.toHexString()]);
     return false;
   }
