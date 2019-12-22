@@ -71,9 +71,9 @@ type Vote @entity {
 
 type NXMToken @entity {
   id: ID!
-  address: Bytes!
-  initialSupply: BigDecimal!
-  totalSupply: BigInt!
+  # address: Bytes!
+  # initialSupply: BigDecimal!
+  # totalSupply: BigInt!
   # price: BigInt!   
   # marketCap: BigInt!
   # users: [User!]

@@ -2,6 +2,7 @@ import { Bytes, log } from "@graphprotocol/graph-ts"
 import { ContractRegister, AddNewVersionCall } from "../generated/ContractRegister/ContractRegister";
 import { MemberRoles, TokenData, ClaimsData, QuotationData, TokenController, NXMToken } from "../generated/templates";
 import { NexusContractList } from  "../generated/schema";
+import { NXMToken as NXMTokenEntity} from '../generated/schema'
 import { getLatestAddress } from "./helpers";
 
 export function updateContracts(call: AddNewVersionCall): void {
@@ -60,6 +61,15 @@ export function updateContracts(call: AddNewVersionCall): void {
     log.info("Found new nxmToken contract: {}", [nxmToken.toHexString()]);
     entity.nxmToken = nxmToken;
     NXMToken.create(nxmToken);
+
+    let tokenEntity = NXMTokenEntity.load(nxmToken.toHex())
+
+    if (tokenEntity == null) {
+      let id = nxmToken.toHex() + "-" + call.transaction.index.toHex()
+      tokenEntity = new NXMTokenEntity(id)
+
+      tokenEntity.save()
+    }
   }
   entity.save();
 }
