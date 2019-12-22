@@ -53,5 +53,5 @@ type NXMToken @entity {
   totalSupply: BigInt!
   price: BigInt!
   marketCap: BigInt!
-  users: [User]
+  users: [User!]
 }
