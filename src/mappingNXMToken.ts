@@ -12,12 +12,22 @@ export function handleTransfer(event: Transfer): void {
     let token = NXMToken.load(id)
     let fromUser = event.params.to
     let toUser = event.params.from
+    
     if (token == null) {
         let token = new NXMToken(id)
         token.save()
     }
 
+    let amount = toTokenDecimals(event.params.value)
     let isBurn = toUser.toHexString() == GENESIS_ADDRESS
     let isMint = fromUser.toHex() == GENESIS_ADDRESS
     let isTransfer = !isBurn && !isMint
+
+    if(isBurn) {
+        token.totalSupply = token.totalSupply.minus(amount)
+        token.save()
+    } else if (isMint) {
+        token.totalSupply = token.totalSupply.pluc(amount)
+        token.save()
+    }
 }
