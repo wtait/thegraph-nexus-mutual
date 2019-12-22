@@ -1,34 +1,33 @@
-import { Bytes, log, Address } from "@graphprotocol/graph-ts"
+import { Bytes, log } from "@graphprotocol/graph-ts"
 import { ContractRegister, AddNewVersionCall } from "../generated/ContractRegister/ContractRegister";
-import { MemberRoles, Pool1, TokenData, ClaimsData } from "../generated/templates";
+import { MemberRoles, TokenData, ClaimsData, QuotationData, TokenController } from "../generated/templates";
 import { NexusContracts } from  "../generated/schema";
-
-function getLatestAddress(register: ContractRegister, hexString: string): Address {
-  return register.getLatestAddress(Bytes.fromHexString(hexString) as Bytes);
-}
+import { getLatestAddress } from "./helpers";
 
 export function updateContracts(call: AddNewVersionCall): void {
   log.info("Updating contracts", []);
   let register = ContractRegister.bind(call.to);
 
   // got bytes using https://onlineutf8tools.com/convert-utf8-to-bytes
-  let pool1 = getLatestAddress(register, "5031"); // P1
   let memberRoles =  getLatestAddress(register, "4d52"); // MR
   let tokenData =  getLatestAddress(register, "5444"); // TD
-  let claimsData = getLatestAddress(register, "43331"); //C1
-  
+  let claimsData = getLatestAddress(register, "4344"); // CD
+  let quotationData = getLatestAddress(register, "5144") // QD
+  let tokenController = getLatestAddress(register, "5443") // TC
+
+  // Add support for Events:
+  // Payout
+  // Commission
+
   let entity = NexusContracts.load("1");
   if (entity == null) {
     entity = new NexusContracts("1");
-    entity.pool1 = new Bytes(0);
+    entity.contractRegister = register._address;
     entity.memberRoles = new Bytes(0);
     entity.tokenData = new Bytes(0);
     entity.claimsData = new Bytes(0);
-  }
-  if (entity.pool1 != pool1) {
-    log.info("Found new pool1 contract: {}", [pool1.toHexString()]);
-    entity.pool1 = pool1;
-    Pool1.create(pool1);
+    entity.quotationData = new Bytes(0);
+    entity.tokenController = new Bytes(0);
   }
   if (entity.memberRoles != memberRoles) {
     log.info("Found new memberRoles contract: {}", [memberRoles.toHexString()]);
@@ -44,6 +43,16 @@ export function updateContracts(call: AddNewVersionCall): void {
     log.info("Found new claimsData contract: {}", [claimsData.toHexString()]);
     entity.claimsData = claimsData;
     ClaimsData.create(claimsData);
+  }
+  if (entity.quotationData != quotationData) {
+    log.info("Found new quotationData contract: {}", [quotationData.toHexString()]);
+    entity.quotationData = quotationData;
+    QuotationData.create(quotationData);
+  }
+  if (entity.tokenController != tokenController) {
+    log.info("Found new tokenController contract: {}", [tokenController.toHexString()]);
+    entity.tokenController = tokenController;
+    TokenController.create(tokenController);
   }
   entity.save();
 }

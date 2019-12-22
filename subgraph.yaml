@@ -58,10 +58,6 @@ templates:
       callHandlers:
         - function: addStake(address,address,uint256)
           handler: handleAddStake
-        - function: pushUnlockedStakedTokens(address,uint256,uint256)
-          handler: handleRemoveStake
-        - function: pushBurnedTokens(address,uint256,uint256)
-          handler: handleBurnStake
       file: ./src/mappingTokenData.ts
   - name: QuotationData
     kind: ethereum/contract
@@ -101,116 +97,23 @@ templates:
         - name: ClaimsData
           file: ./abis/ClaimsData.json
       file: ./src/mappingClaimsData.ts
-  - name: Pool1
+  - name: TokenController
     kind: ethereum/contract
     network: mainnet
     source:
-      abi: Pool1
+      abi: TokenController
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
       language: wasm/assemblyscript
       entities:
-        - Cover
+        - TokenController
+      eventHandlers:
+        - event: Burned(indexed address,bytes32,uint256)
+          handler: handleBurned
+        - event: Unlocked(indexed address,indexed bytes32,uint256)
+          handler: handleUnlocked
       abis:
-        - name: Pool1
-          file: ./abis/Pool1.json
-        - name: ContractRegister
-          file: ./abis/ContractRegister.json
-        - name: QuotationData
-          file: ./abis/QuotationData.json
-      callHandlers:
-        - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32)
-          handler: handleNewCover
-      file: ./src/mappingPool1.ts
-  - name: TokenData
-    kind: ethereum/contract
-    network: mainnet
-    source:
-      abi: TokenData
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      entities:
-        - Stake
-      abis:
-        - name: TokenData
-          file: ./abis/TokenData.json
-      callHandlers:
-        - function: addStake(address,address,uint256)
-          handler: handleAddStake
-        - function: pushUnlockedStakedTokens(address,uint256,uint256)
-          handler: handleRemoveStake
-        - function: pushBurnedTokens(address,uint256,uint256)
-          handler: handleBurnStake
-      file: ./src/mappingTokenData.ts
-  - name: Claims
-    kind: ethereum/contract
-    network: mainnet
-    source:
-      abi: Claims
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      entities:
-        - Claim
-      abis:
-        - name: Claims
-          file: ./abis/Claims.json
-      callHandlers:
-        - function: submitClaim(uint256)
-          handler: handleSubmitClaim
-      file: ./src/mappingClaims.ts
-  - name: QuotationData
-    kind: ethereum/contract
-    network: mainnet
-    source:
-      abi: QuotationData
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      entities:
-        - QuotationData
-      abis:
-        - name: QuotationData
-          file: ./abis/QuotationData.json
-      file: ./src/mappingQuotationData.ts
-  - name: ClaimsData
-    kind: ethereum/contract
-    network: mainnet
-    source:
-      abi: ClaimsData
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      entities:
-        - Claim
-      abis:
-        - name: ClaimsData
-          file: ./abis/ClaimsData.json
-      callHandlers:
-        - function: addClaim(uint256, uint256, address, uint256)
-          handler: handleAddClaim
-      file: ./src/mappingClaimsData.ts
-  - name: NXMToken
-    kind: ethereum/contract
-    network: mainnet
-    source:
-      abi: NXMToken
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      entities:
-        - NXMToken
-      abis:
-        - name: NXMToken
-          file: ./abis/NXMToken.json
-      callHandlers:
-        - function: Transfer(indexed address, indexed address, uint256)
-          handler: handleTransfer
-      file: ./src/mappingNXMToken.ts
+        - name: TokenController
+          file: ./abis/TokenController.json
+      file: ./src/mappingTokenController.ts
