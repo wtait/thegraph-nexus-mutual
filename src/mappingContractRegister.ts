@@ -1,6 +1,6 @@
 import { Bytes, log } from "@graphprotocol/graph-ts"
 import { ContractRegister, AddNewVersionCall } from "../generated/ContractRegister/ContractRegister";
-import { MemberRoles, TokenData, ClaimsData, QuotationData, TokenController } from "../generated/templates";
+import { MemberRoles, TokenData, ClaimsData, QuotationData, TokenController, NXMToken } from "../generated/templates";
 import { NexusContracts } from  "../generated/schema";
 import { getLatestAddress } from "./helpers";
 
@@ -14,6 +14,7 @@ export function updateContracts(call: AddNewVersionCall): void {
   let claimsData = getLatestAddress(register, "4344"); // CD
   let quotationData = getLatestAddress(register, "5144") // QD
   let tokenController = getLatestAddress(register, "5443") // TC
+  let nxmToken = getLatestAddress(register, "746b") // TK
 
   // Add support for Events:
   // Payout
@@ -28,6 +29,7 @@ export function updateContracts(call: AddNewVersionCall): void {
     entity.claimsData = new Bytes(0);
     entity.quotationData = new Bytes(0);
     entity.tokenController = new Bytes(0);
+    entity.nxmToken = new Bytes(0);
   }
   if (entity.memberRoles != memberRoles) {
     log.info("Found new memberRoles contract: {}", [memberRoles.toHexString()]);
@@ -53,6 +55,11 @@ export function updateContracts(call: AddNewVersionCall): void {
     log.info("Found new tokenController contract: {}", [tokenController.toHexString()]);
     entity.tokenController = tokenController;
     TokenController.create(tokenController);
+  }
+  if (entity.nxmToken != nxmToken) {
+    log.info("Found new nxmToken contract: {}", [nxmToken.toHexString()]);
+    entity.nxmToken = nxmToken;
+    NXMToken.create(nxmToken);
   }
   entity.save();
 }

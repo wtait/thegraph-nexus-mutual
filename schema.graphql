@@ -3,6 +3,7 @@ type User @entity {
   isMember: Boolean!
   coverCount: Int!
   stakeCount: Int!
+  #balance: Int!
   covers: [Cover!]! @derivedFrom(field: "user")
   stakes: [Stake!]! @derivedFrom(field: "user")
   claims: [Claim!]! @derivedFrom(field: "user")
@@ -34,8 +35,8 @@ type Stake @entity {
   user: User!
   contract: InsuredContract!
   amount: BigDecimal!
-  unlockedAmount: BigInt!
-  burntAmount: BigInt!
+  unlockedAmount: BigDecimal!
+  burntAmount: BigDecimal!
   daysToStake: Int!
   created: BigInt!
   expires: BigInt!
@@ -49,6 +50,7 @@ type NexusContracts @entity {
   claimsData: Bytes! # address
   quotationData: Bytes! # address
   tokenController: Bytes! # address
+  nxmToken: Bytes! # address
 }
 
 type Claim @entity {
@@ -67,10 +69,10 @@ type Vote @entity {
   submitDate: BigInt!
 }
 
-# type NXMToken @entity {
-#   id: ID!
-#   totalSupply: BigInt!
-#   price: BigInt!
-#   marketCap: BigInt!
-#   users: [User]
-# }
+type NXMToken @entity {
+  id: ID!
+  # totalSupply: BigInt!
+  # price: BigInt!   
+  # marketCap: BigInt!
+  # users: [User!]
+}
