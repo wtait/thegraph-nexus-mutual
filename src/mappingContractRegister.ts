@@ -1,9 +1,9 @@
-import { Bytes, log } from "@graphprotocol/graph-ts"
+import { Bytes, log, Address, BigDecimal, BigInt, EthereumEvent } from "@graphprotocol/graph-ts"
 import { ContractRegister, AddNewVersionCall } from "../generated/ContractRegister/ContractRegister";
 import { MemberRoles, TokenData, ClaimsData, QuotationData, TokenController, NXMToken } from "../generated/templates";
 import { NexusContractList } from  "../generated/schema";
 import { NXMToken as NXMTokenEntity} from '../generated/schema'
-import { getLatestAddress } from "./helpers";
+import { getLatestAddress, ZERO } from "./helpers";
 
 export function updateContracts(call: AddNewVersionCall): void {
   log.info("Updating contracts", []);
@@ -66,8 +66,14 @@ export function updateContracts(call: AddNewVersionCall): void {
 
     if (tokenEntity == null) {
       let id = nxmToken.toHex() + "-" + call.transaction.index.toHex()
+      //let contract = NXMToken.bind(call.outputValues.)
+      
       tokenEntity = new NXMTokenEntity(id)
-
+      tokenEntity.address = null
+      //tokenEntity.initialSupply = ZERO.toBigDecimal()
+      tokenEntity.totalSupply
+      //tokenEntity.price = ZERO.toBigDecimal()
+      //tokenEntity.marketCap = ZERO.toBigDecimal()
       tokenEntity.save()
     }
   }

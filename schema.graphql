@@ -71,10 +71,55 @@ type Vote @entity {
 
 type NXMToken @entity {
   id: ID!
-  # address: Bytes!
-  # initialSupply: BigDecimal!
-  # totalSupply: BigInt!
-  # price: BigInt!   
-  # marketCap: BigInt!
-  # users: [User!]
+
+  " Token address "
+  address: Bytes!
+
+  " Number of decimals the token uses "
+  decimals: Int!
+
+  " Human-readable name of the token "
+  name: String!
+
+  " Symbol of the token "
+  symbol: String!
+
+  " Token description "
+  description: String
+
+  " Image URL "
+  imageUrl: String
+
+  " Token flags"
+  flags: [String!]!
+
+  # TODO: Number of token holders
+  # holderCount: BigInt!
+
+  " Total number of events (all types)"
+  eventCount: BigInt!
+
+  " Total number of burn events "
+  burnEventCount: BigInt!
+
+  " Total number of mint events "
+  mintEventCount: BigInt!
+
+  " Total number of transfer events "
+  transferEventCount: BigInt!
+
+  " Total token supply "
+  totalSupply: BigDecimal!
+
+  " Total token burned "
+  totalBurned: BigDecimal!
+
+  " Total token minted "
+  totalMinted: BigDecimal!
+
+  " Total token transferred "
+  totalTransferred: BigDecimal!
+
+  # " List of token events "
+  # events: [TokenEvent!]! @derivedFrom(field: "token")
 }

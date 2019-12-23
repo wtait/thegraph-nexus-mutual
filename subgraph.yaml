@@ -22,6 +22,29 @@ dataSources:
         - function: addNewVersion(address[])
           handler: updateContracts
       file: ./src/mappingContractRegister.ts
+  - name: TokenRegistry
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: TokenRegistry
+      address: '0x7f751820be4b1e44464268c425af6095995e045a'
+      startBlock: 75563
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/mappingNXMToken.ts
+      entities:
+        - NXMToken
+      abis:
+        - name: TokenRegistry
+          file: ./abis/TokenRegistry.json
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: 'Unknown(indexed bytes,indexed bytes)'
+          topic0: '0xa9e319c3b10db96c5cee4bc3ebffa9c5581f222f14a4deb0df7ec2088ccd0974'
+          handler: initRegistry
 templates:
   - name: MemberRoles
     kind: ethereum/contract
@@ -137,3 +160,57 @@ templates:
         - function: Transfer(indexed address, indexed address, uint256)
           handler: handleTransfer
       file: ./src/mappingNXMToken.ts
+  - name: StandardToken
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: ERC20
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/mappingNXMToken.ts
+      entities:
+        - TransferEvent
+      abis:
+        - name: ERC20
+          file: ./abis/ERC20.json
+      eventHandlers:
+        - event: Transfer(indexed address,indexed address,uint256)
+          handler: handleTransfer
+  - name: BurnableToken
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Burnable
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/mappingNXMToken.ts
+      entities:
+        - BurnEvent
+      abis:
+        - name: Burnable
+          file: ./abis/Burnable.json
+      eventHandlers:
+        - event: Burn(indexed address,uint256)
+          handler: handleBurn
+  - name: MintableToken
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: Mintable
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      file: ./src/mappingNXMToken.ts
+      entities:
+        - MintEvent
+      abis:
+        - name: Mintable
+          file: ./abis/Mintable.json
+      eventHandlers:
+        - event: Mint(indexed address,uint256)
+          handler: handleMint
